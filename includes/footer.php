@@ -34,8 +34,23 @@
         });
     }
 
-    // Kode Preload on Hover (yang kamu tempel di sini)
-    document.addEventListener('DOMContentLoaded', () => {
+    // Kode untuk membuat navbar muncul/hilang saat scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.site-header');
+        let lastScrollY = window.pageYOffset;
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > lastScrollY && window.pageYOffset > 100) {
+                // Saat scroll ke bawah, tambahkan kelas untuk menyembunyikan header.
+                header.classList.add('hide');
+            } else if (window.pageYOffset < lastScrollY) {
+                // Saat scroll ke atas, hapus kelas untuk menampilkan header.
+                header.classList.remove('hide');
+            }
+            lastScrollY = window.pageYOffset;
+        });
+
+        // Kode Preload on Hover (yang kamu tempel di sini)
         document.body.addEventListener('mouseover', async (event) => {
             const link = event.target.closest('a');
             if (link && link.href && !link.dataset.prefetched) {
