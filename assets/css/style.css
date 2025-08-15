@@ -64,16 +64,23 @@ body {
 }
 
 /* --- Header Styles --- */
-/* --- Header Styles --- */
 .site-header {
   background-color: rgb(192, 0, 0); /* Merah utama */
   color: #fff;
   padding: 1em 0;
-  position: sticky;
+  position: fixed; /* Ubah dari sticky ke fixed */
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* Pastikan lebar 100% agar tidak ada spasi di samping */
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  /* Tambahkan atau modifikasi baris ini */
+  transition: transform 0.3s ease-in-out;
+}
+
+.site-header.hide {
+  /* Menyembunyikan navbar di luar viewport saat kelas 'hide' ditambahkan */
+  transform: translateY(-100%);
 }
 
 .header-container {
@@ -241,11 +248,12 @@ body {
   text-align: center;
   padding: 6em 1em 5em;
   border-radius: 0 0 15px 15px;
-  margin: 0 auto 2.5em auto;
+  margin: 0 auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .hero h2 {
+  padding-top: 20px;
   font-size: 2.8em;
   margin-bottom: 0.4em;
   font-weight: 700;
@@ -284,11 +292,20 @@ body {
 }
 
 /* --- Section Titles --- */
-.container > h2,
-.container > h3 {
+.container > h2{
+  padding-top: 80px;
   text-align: center;
   margin-bottom: 1.5em;
   margin-top: 2em;
+  font-size: 2em;
+  color: #c00000; /* Merah utama */
+  font-weight: 600;
+}
+
+.container > h3{
+  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 1.5em;
   font-size: 2em;
   color: #c00000; /* Merah utama */
   font-weight: 600;
@@ -584,7 +601,7 @@ body {
 
 /* --- Recipe Detail Page Styles --- */
 .recipe-detail-container {
-  margin: 2em auto;
+  margin: 110px auto 2em auto;
   padding: 0 1rem;
   max-width: 850px;
 }
@@ -767,7 +784,7 @@ body {
 /* --- Generic Page Styles (About, etc) --- */
 .generic-page-container {
   max-width: 800px;
-  margin: 2em auto;
+  margin: 100px auto 2em auto;
   background-color: #fff;
   padding: 2.5em;
   border-radius: 10px;
@@ -794,10 +811,17 @@ body {
 }
 
 /* --- Responsive Styles --- */
-@media (max-width: 1149px) {
+@media (max-width: 1151px) {
   .search-bar {
     width: 100%;
   }
+  
+  .recipe-detail-container {
+  margin: 160px auto 2em auto;
+}
+.generic-page-container {
+  margin: 150px auto 2em auto;
+}
 }
 
 @media (max-width: 992px) {
@@ -882,24 +906,34 @@ body {
     padding: 5em 1em 4em;
   }
   .hero h2 {
+    padding-top: 30px;
     font-size: 2em;
   }
   .hero p {
     font-size: 1.1em;
   }
+
+  
   .cta-button {
     font-size: 1em;
   }
 
-  .container > h2,
-  .container > h3 {
-    text-align: center;
-    margin-bottom: 1.5em;
-    margin-top: 2em;
-    font-size: 2em;
-    color: #c00000; /* Merah utama */
-    font-weight: 600;
+  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 1.5em;
+  font-size: 2em;
+  color: #c00000; /* Merah utama */
+  font-weight: 600;
+
+  .container > h2{
+    padding-top: 80px;
+    font-size: 1.5em;
   }
+
+  .container > h3 {
+    font-size: 1.5em;
+  }
+
 
   .recipe-card h4,
   .category-card h3 {
@@ -927,4 +961,6 @@ body {
   .comment-section {
     scroll-margin-top: 100px; /* New value for mobile */
   }
+
+  
 }
