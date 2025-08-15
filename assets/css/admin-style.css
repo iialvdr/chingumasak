@@ -1,0 +1,986 @@
+/* --- Scrollbar Customization --- */
+::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar vertikal */
+  height: 8px; /* Lebar scrollbar horizontal */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c00000; /* Warna thumb scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Warna track scrollbar */
+}
+
+/* --- Global Body & HTML --- */
+html,
+body {
+  overflow-x: hidden; /* Mencegah scrolling horizontal pada seluruh halaman */
+  width: 100%; /* Pastikan body dan html mengambil 100% lebar viewport */
+}
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  color: #343a40;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.6; /* Menambah kenyamanan membaca */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Admin Wrapper for Sidebar Layout --- */
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  width: 100%;
+}
+
+/* --- Sidebar Styles --- */
+.admin-sidebar {
+  width: 250px; /* Lebar sidebar */
+  background-color: #343a40;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; /* Memastikan sidebar mengambil seluruh tinggi viewport */
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out; /* Untuk animasi mobile */
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo .logo-img {
+  max-width: 180px; /* Sesuaikan ukuran logo */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.admin-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Agar navigasi mengambil ruang yang tersedia */
+}
+
+.admin-nav li a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: #adb5bd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-nav li a i {
+  margin-right: 10px;
+  font-size: 1.1em;
+}
+
+.admin-nav li a:hover,
+.admin-nav li a.active {
+  background-color: #e85a4f; /* Warna latar saat hover/aktif */
+  color: #fff;
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto; /* Mendorong footer ke bagian bawah sidebar */
+}
+
+.admin-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  text-decoration: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  background-color: #495057;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  width: 100%; /* Agar tombol logout mengisi lebar footer */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.admin-logout:hover {
+  background-color: #6c757d;
+  transform: translateY(-2px);
+}
+
+.admin-logout i {
+  margin-right: 8px;
+}
+
+/* --- Main Content Area --- */
+.admin-content-area {
+  flex-grow: 1; /* Mengambil sisa ruang horizontal */
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* Menggeser konten ke kanan sebesar lebar sidebar */
+  width: calc(100% - 250px); /* Menyesuaikan lebar agar pas di sisa ruang */
+  height: 100vh; /* Pastikan tinggi penuh untuk scrolling yang benar */
+  overflow-y: auto; /* Memungkinkan area konten ini untuk discroll */
+}
+
+.admin-topbar {
+  background-color: #c00000;
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 999; /* Di bawah sidebar */
+  display: none; /* Sembunyikan secara default, hanya tampil di mobile */
+}
+
+.admin-topbar .admin-title-mobile {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.menu-toggle-mobile {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.user-info-topbar {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+main.admin-main {
+  padding: 2.5rem;
+  max-width: 1200px; /* Maksimal lebar konten utama */
+  margin: 2rem auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  flex-grow: 1;
+  width: calc(100% - 4rem); /* Sesuaikan lebar agar ada padding di samping */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+main.admin-main h2 {
+  color: #c00000;
+  margin-bottom: 1.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid #eee;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+/* --- Dashboard Statistics --- */
+.dashboard-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.stat-card {
+  background-color: #f0f2f5;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #e9ecef;
+}
+
+.stat-card h3 {
+  color: #495057;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card .stat-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #c00000;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.stat-card .stat-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  color: #c00000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.stat-card .stat-link:hover {
+  color: #e85a4f;
+  text-decoration: underline;
+}
+
+.stat-card .stat-link i {
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+
+/* --- General Button Styles --- */
+.top-action {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  background-color: #c00000;
+  color: white !important;
+  padding: 0.7rem 1.4rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.btn:hover {
+  background-color: #a00000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn.btn-secondary {
+  background-color: #6c757d;
+}
+.btn.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn.btn-info {
+  /* Tambahkan style untuk tombol Lihat */
+  background-color: #17a2b8;
+}
+.btn.btn-info:hover {
+  background-color: #138496;
+}
+
+.btn.delete-btn,
+.btn.btn-danger {
+  background-color: #dc3545;
+}
+.btn.delete-btn:hover,
+.btn.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* --- Table Styles --- */
+.table-responsive {
+  overflow-x: auto; /* Allow horizontal scrolling on larger screens */
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  background-color: #fff; /* Ensure background is white */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+  table-layout: auto; /* Allow columns to size naturally */
+}
+
+th,
+td {
+  border: 1px solid #e9ecef;
+  padding: 14px 18px;
+  text-align: left;
+  vertical-align: middle;
+  box-sizing: border-box; /* Include padding in width */
+  word-wrap: break-word;   /* Memastikan kata yang sangat panjang akan pecah */
+  overflow-wrap: break-word; /* Standar modern untuk word-wrap */
+}
+
+th {
+  background-color: #f1f3f5;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  white-space: nowrap; /* Prevent header text from wrapping */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+tbody tr:hover {
+  background-color: #e0e6eb;
+}
+
+img.recipe-thumb {
+  max-width: 90px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+  display: block; /* Ensure it takes full width of its content */
+  margin: 0 auto; /* Center image within cell */
+}
+
+/* Styles for "Featured" status text */
+.status-featured {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  background-color: #28a745; /* Green for "Ya" */
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-non-featured {
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  background-color: #6c757d; /* Gray for "Tidak" */
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Action buttons inside table cells */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem; /* Memberi jarak antar tombol */
+  flex-wrap: wrap; /* Mengizinkan tombol untuk berpindah baris jika tidak muat */
+  justify-content: flex-start; /* Mengatur tombol ke kiri di dalam sel */
+  align-items: center;
+}
+
+/* Base styling for ALL buttons within .action-buttons, including the one inside the form */
+.action-buttons .btn,
+.action-buttons form button {
+  /* Target both direct .btn and button inside form */
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap; /* Mencegah teks tombol pecah */
+  margin-bottom: 0; /* Pastikan tidak ada margin bawah tambahan */
+  flex-grow: 0; /* Jangan biarkan tombol tumbuh terlalu banyak */
+  flex-shrink: 0; /* Jangan biarkan tombol menyusut terlalu banyak */
+  text-align: center; /* Pusatkan teks di tombol */
+  /* Set fixed width or flex-basis to ensure equal size */
+  flex-basis: calc(100% - 0.25rem); /* Set to roughly 50% minus half of the gap */
+  max-width: calc(100% - 0.25rem); /* Limit max width too */
+  box-sizing: border-box; /* Include padding/border in size calculation */
+}
+
+.action-buttons form {
+  /* Penting: Membuat container form seolah tidak ada
+       Ini akan menghilangkan box model form itu sendiri,
+       sehingga hanya konten di dalamnya (tombol) yang akan diatur oleh flexbox parent */
+  display: contents;
+}
+
+/* Memastikan teks judul resep di dalam link juga membungkus */
+table td a {
+    display: inline-block; /* Penting agar max-width berfungsi */
+    max-width: 100%;       /* Pastikan link tidak melebihi lebar sel */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* --- Form Styles --- */
+form {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 1.5rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  color: #495057;
+  font-size: 1.05rem;
+}
+
+form input[type="text"],
+form input[type="url"],
+form input[type="file"],
+form input[type="password"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: "Poppins", Arial, sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="url"]:focus,
+form input[type="password"]:focus,
+form input[type="file"]:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #c00000;
+  box-shadow: 0 0 0 4px rgba(192, 0, 0, 0.2);
+  outline: none;
+}
+
+form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+form button[type="submit"] {
+  background-color: #c00000;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #a00000;
+  transform: translateY(-2px);
+}
+
+/* --- Search and Filter Form Styles --- */
+.search-filter {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.search-filter input[type="text"],
+.search-filter select {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  flex: 1;
+  min-width: 220px;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+.search-filter button {
+  padding: 12px 25px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.search-filter button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* --- Message Styles (Success, Error, Warning) --- */
+.message {
+  padding: 1.2rem 1.8rem;
+  margin-bottom: 1.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid transparent;
+  text-align: center;
+}
+.success-message,
+.message.success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.error-message,
+.message.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.warning-message,
+.message.warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+/* --- Back Link Style --- */
+a.back-link,
+a.kembali {
+  display: inline-block;
+  margin-bottom: 1.8rem;
+  color: #c00000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.3s ease;
+}
+a.back-link:hover,
+a.kembali:hover {
+  text-decoration: underline;
+  color: #e85a4f;
+}
+
+/* --- Login Page Specific Styles --- */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 1rem;
+}
+.login-box {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #c00000;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.login-box form button[type="submit"] {
+  background: #c00000;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.15rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 1rem;
+}
+.login-box form button[type="submit"]:hover {
+  background: #a00000;
+  transform: translateY(-2px);
+}
+.login-box .error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* ========================================= */
+/* --- Responsive Styles (Media Queries) --- */
+/* ========================================= */
+
+/* Tablet & Smaller Desktops (less than 992px) */
+@media (max-width: 992px) {
+  /* Main wrapper flex direction change */
+  .admin-wrapper {
+    flex-direction: column;
+  }
+
+  /* Sidebar goes off-screen by default */
+  .admin-sidebar {
+    position: fixed; /* Tetap fixed untuk mobile slide-out */
+    transform: translateX(-250px); /* Sembunyikan sidebar di luar layar */
+    /* Tidak ada perubahan lebar atau tinggi dari desktop */
+  }
+
+  /* Active state for sidebar (when toggled) */
+  .admin-sidebar.active {
+    transform: translateX(0); /* Geser masuk ke tampilan */
+  }
+
+  /* Content area adjustment */
+  .admin-content-area {
+    margin-left: 0; /* Hapus margin-left di mobile */
+    width: 100%; /* Ambil lebar penuh di mobile */
+  }
+
+  /* Top bar visible on mobile */
+  .admin-topbar {
+    display: flex; /* Tampilkan topbar di layar kecil */
+  }
+
+  /* Main content padding adjustment */
+  main.admin-main {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    width: 92%;
+  }
+
+  main.admin-main h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .top-action {
+    flex-direction: column;
+    align-items: stretch; /* Regangkan tombol menjadi lebar penuh */
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-filter {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-filter input[type="text"],
+  .search-filter select {
+    width: 100%;
+    min-width: unset;
+  }
+  .search-filter button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Table changes for smaller screens - allow horizontal scroll but prepare for stacking */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  table {
+    min-width: 650px; /* Tetapkan lebar minimum tabel sebelum bertumpuk */
+    width: 100%;
+  }
+  th,
+  td {
+    white-space: normal; /* Izinkan teks di dalam sel untuk membungkus */
+  }
+  img.recipe-thumb {
+    max-width: 70px;
+  }
+
+  .action-buttons {
+    justify-content: center; /* Pusatkan tombol untuk layar ini */
+    gap: 0.5rem;
+  }
+  .action-buttons .btn,
+  .action-buttons form button {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    flex-basis: calc(50% - 0.25rem); /* Pertahankan 50% untuk 2 tombol */
+    max-width: calc(50% - 0.25rem);
+  }
+
+  form {
+    padding: 2rem;
+    margin-top: 1.2rem;
+  }
+
+  form label {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  form input[type="text"],
+  form input[type="url"],
+  form input[type="file"],
+  form input[type="password"],
+  form select,
+  form textarea {
+    padding: 10px 12px;
+    margin-bottom: 1.2rem;
+  }
+
+  form button[type="submit"] {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+
+  .login-box {
+    padding: 2.5rem;
+    max-width: 400px;
+  }
+
+  .login-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-box form button[type="submit"] {
+    padding: 12px;
+    font-size: 1.05rem;
+    margin-top: 0.8rem;
+  }
+}
+
+/* Mobile Devices (less than 600px) */
+@media (max-width: 600px) {
+  /* Admin sidebar specific mobile adjustments */
+  .admin-sidebar {
+    width: 220px; /* Lebar sidebar di mobile */
+    transform: translateX(-220px); /* Sembunyikan sepenuhnya */
+  }
+  .admin-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-logo .logo-img {
+    max-width: 150px;
+  }
+
+  /* Admin topbar specific mobile adjustments */
+  .admin-topbar {
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap; /* Izinkan elemen untuk membungkus */
+  }
+
+  .admin-topbar .admin-title-mobile {
+    font-size: 1.3rem;
+    margin-left: 0.5rem; /* Jarak antara tombol toggle dan judul */
+    flex-grow: 1; /* Buat judul mengambil ruang */
+  }
+  .user-info-topbar {
+    width: 100%; /* Ambil lebar penuh pada baris baru */
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.85em;
+  }
+
+  /* Main content area adjustments */
+  main.admin-main {
+    padding: 1rem; /* Kurangi padding untuk layar sangat kecil */
+    margin: 1rem auto;
+    width: 98%; /* Gunakan hampir seluruh lebar */
+  }
+  main.admin-main h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Dashboard stats mobile adjustments */
+  .dashboard-stats {
+    flex-direction: column; /* Tumpuk kartu statistik secara vertikal */
+    align-items: center;
+  }
+  .stat-card {
+    min-width: 70%; /* Buat kartu statistik lebar penuh */
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+  .stat-card h3 {
+    font-size: 1.3rem;
+  }
+  .stat-card .stat-number {
+    font-size: 2.8rem;
+  }
+
+  /* General button adjustments */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  .top-action {
+    margin-bottom: 0.8rem;
+  }
+
+  /* Search and filter adjustments */
+  .search-filter {
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    gap: 0.5rem;
+    flex-direction: column; /* Tumpuk item filter */
+  }
+  .search-filter input[type="text"],
+  .search-filter select,
+  .search-filter button {
+    width: 100%; /* Buat item filter lebar penuh */
+    min-width: unset;
+    font-size: 0.85rem;
+    padding: 6px 8px;
+  }
+  .search-filter .btn {
+    /* Sesuaikan ukuran untuk tombol "Reset Filter" */
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* --- Table Card Layout for Mobile --- */
+  .table-responsive {
+    overflow-x: hidden; /* Sangat penting: Pastikan ini HIDDEN di mode kartu */
+    width: 100%; /* Pastikan wrapper ini mengambil lebar penuh */
+    box-sizing: border-box; /* Pastikan padding termasuk dalam perhitungan width */
+  }
+
+  table {
+    border: 0;
+    min-width: unset; /* Hapus min-width di mode kartu */
+    width: 100%; /* Pastikan tabel mengambil lebar penuh */
+    box-shadow: none;
+  }
+  table thead {
+    display: none; /* Sembunyikan header tabel di mobile */
+  }
+  table tr {
+    display: block; /* Buat setiap baris menjadi elemen blok (kartu) */
+    margin-bottom: 0.8rem; /* Kurangi margin antar kartu */
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: #fff;
+  }
+  table td {
+    display: block; /* Buat setiap sel menjadi elemen blok */
+    text-align: right; /* Rata kanan konten sel */
+    border-bottom: 1px dashed #dee2e6; /* Tambahkan batas putus-putus antar sel */
+    padding: 0.7rem 0.8rem; /* Kurangi padding sel */
+    position: relative;
+    white-space: normal; /* Izinkan teks di dalam sel untuk membungkus */
+  }
+  table td:last-child {
+    border-bottom: 0; /* Hapus batas bawah dari sel terakhir di baris */
+  }
+
+  /* Pseudo-element for data-labels (column headers) */
+  table td::before {
+    content: attr(data-label); /* Ambil konten dari atribut data-label */
+    position: absolute;
+    left: 0.8rem; /* Sesuaikan posisi label */
+    width: 45%; /* Kurangi lebar label */
+    padding-right: 5px; /* Kurangi padding */
+    white-space: nowrap; /* Cegah label agar tidak membungkus */
+    text-align: left;
+    font-weight: 600;
+    color: #6c757d;
+    box-sizing: border-box;
+  }
+
+  /* Adjust padding for content to align with pseudo-element label */
+  table td:not(:first-child) {
+    padding-left: calc(45% + 1.2rem); /* Sesuaikan padding untuk ruang label */
+  }
+
+  /* Specific adjustments for the 'Gambar' column */
+  table td:first-child {
+    /* Ini adalah kolom 'Gambar' */
+    text-align: center; /* Pusatkan gambar */
+    padding-top: 1.2rem;
+    padding-bottom: 0.5rem;
+  }
+  table td:first-child::before {
+    display: none; /* Sembunyikan label untuk kolom gambar */
+  }
+
+  /* Specific adjustment for 'Unggulan' column on mobile */
+  table td[data-label="Unggulan"] {
+    text-align: center; /* Pusatkan status "Ya" atau "Tidak" */
+    padding-right: 0.8rem; /* Reset padding-left untuk pemusatan */
+  }
+  table td[data-label="Unggulan"]::before {
+    left: 0.8rem; /* Sesuaikan posisi label jika perlu */
+    width: auto; /* Izinkan label untuk menyesuaikan ukuran secara alami */
+    padding-right: 0; /* Hapus padding */
+    text-align: left;
+  }
+
+  img.recipe-thumb {
+    max-width: 40px; /* Kurangi ukuran thumbnail */
+    margin: 0 auto; /* Pusatkan gambar lagi dalam tampilan kartu */
+  }
+
+  .action-buttons {
+    flex-direction: column; /* Tumpuk tombol secara vertikal */
+    align-items: stretch; /* Regangkan tombol mengisi lebar container */
+    gap: 0.3rem; /* Kurangi jarak antar tombol saat bertumpuk */
+    width: 100%; /* Pastikan wrapper tombol mengisi lebar sel */
+  }
+  .action-buttons .btn,
+  .action-buttons form button {
+    width: 100%; /* Tombol mengisi lebar penuh saat bertumpuk */
+    flex-basis: auto; /* Reset flex-basis agar width 100% bekerja */
+    max-width: unset; /* Reset max-width */
+    padding: 0.4rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
+  /* Form adjustments */
+  form {
+    padding: 1rem;
+    margin-top: 0.8rem;
+  }
+  form label {
+    font-size: 0.9rem;
+  }
+  form input,
+  form select,
+  form textarea,
+  form button {
+    font-size: 0.85rem;
+    padding: 7px 9px;
+  }
+  form textarea {
+    min-height: 80px;
+  }
+  form button[type="submit"] {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
