@@ -90,13 +90,4 @@ if (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) {
                                                         });
                                                             }
                                                               });
-  // Kode baru untuk efek navbar saat di-scroll
-  window.addEventListener('scroll', () => {
-      const header = document.querySelector('.site-header');
-      if (window.scrollY > 50) { // Menambahkan kelas 'scrolled' setelah menggulir 50px
-          header.classList.add('scrolled');
-      } else {
-          header.classList.remove('scrolled');
-      }
-  });
 </script>
