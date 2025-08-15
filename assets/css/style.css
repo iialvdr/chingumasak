@@ -65,13 +65,21 @@ body {
 
 /* --- Header Styles --- */
 .site-header {
-  background: #c00000;
+  background-color: rgb(192, 0, 0); /* Merah dengan transparansi */
   color: #fff;
   padding: 1em 0;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Efek Header saat di Scroll */
+.site-header.scrolled {
+    background-color: rgba(192, 0, 0, 0.8); /* Merah dengan transparansi */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* Dukungan untuk browser WebKit */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .header-container {
