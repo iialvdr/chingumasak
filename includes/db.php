@@ -2,10 +2,10 @@
 // Setel zona waktu default PHP ke Asia/Jakarta (WIB)
 date_default_timezone_set('Asia/Jakarta');
 
-$host = "sql102.infinityfree.com";
-$user = "if0_39253347";
-$pass = "4kMP4hzMBv5";
-$db = "if0_39253347_chingumasak";
+$host = "";
+$user = "";
+$pass = "";
+$db = "";
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
@@ -100,4 +100,5 @@ function getRecipeImageUrl($imageFilename) {
         return $baseAssetPath . '/images/default-placeholder.png';
     }
 }
+
 ?>
