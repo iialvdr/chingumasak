@@ -81,13 +81,22 @@ if (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       const menuToggle = document.querySelector('.menu-toggle');
-          const nav = document.getElementById('primary-navigation');
-              if (menuToggle && nav) {
-                      menuToggle.addEventListener('click', () => {
-                                const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
-                                          menuToggle.setAttribute('aria-expanded', !expanded);
-                                                    nav.classList.toggle('active');
-                                                            });
-                                                                }
-                                                                  });
-                                                                  </script>
+      const nav = document.getElementById('primary-navigation');
+          if (menuToggle && nav) {
+                  menuToggle.addEventListener('click', () => {
+                            const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+                                      menuToggle.setAttribute('aria-expanded', !expanded);
+                                                nav.classList.toggle('active');
+                                                        });
+                                                            }
+                                                              });
+  // Kode baru untuk efek navbar saat di-scroll
+  window.addEventListener('scroll', () => {
+      const header = document.querySelector('.site-header');
+      if (window.scrollY > 50) { // Menambahkan kelas 'scrolled' setelah menggulir 50px
+          header.classList.add('scrolled');
+      } else {
+          header.classList.remove('scrolled');
+      }
+  });
+</script>
