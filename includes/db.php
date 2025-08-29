@@ -1,50 +1,103 @@
-### **ChinguMasak**
+<?php
+// Setel zona waktu default PHP ke Asia/Jakarta (WIB)
+date_default_timezone_set('Asia/Jakarta');
 
-ChinguMasak adalah platform web yang didedikasikan untuk berbagi resep masakan Korea otentik dan inovatif. Misi utama proyek ini adalah menyediakan resep yang mudah diakses dan menyenangkan untuk dimasak oleh semua orang, baik pemula maupun koki berpengalaman.
+$host = "";
+$user = "";
+$pass = "";
+$db = "";
 
----
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+  die("Koneksi gagal: " . $conn->connect_error);
+}
 
-### **Fitur Utama**
+$conn->query("SET time_zone = '+07:00'");
 
-Situs web ini memiliki fungsionalitas untuk pengguna umum dan panel admin untuk pengelolaan konten.
+// Definisi path aplikasi dasar
+if (!defined('BASE_ASSET_PATH')) {
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $app_sub_directory = '';
 
-#### **Fitur Pengguna**
-* **Halaman Utama**: Menampilkan resep unggulan dan kategori populer.
-* **Semua Resep**: Menjelajahi daftar lengkap resep.
-* **Kategori Resep**: Menyaring resep berdasarkan kategori.
-* **Pencarian Resep**: Mencari resep berdasarkan judul, bahan, atau langkah-langkah.
-* **Detail Resep**: Melihat detail, bahan, langkah-langkah, dan video tutorial untuk setiap resep.
-* **Komentar**: Pengguna dapat menambahkan komentar pada setiap halaman resep.
+    if (strpos($script_name, 'index.php') !== false) {
+        $app_sub_directory = rtrim(dirname($script_name), '/');
+    } else if (strpos($script_name, '/admin/') !== false) {
+        $app_sub_directory = rtrim(dirname(dirname($script_name)), '/'); // Go up two levels for admin
+    } else {
+        $app_sub_directory = rtrim(dirname(dirname($script_name)), '/'); // Default for pages if not root
+    }
 
-#### **Fitur Panel Admin**
-* **Login Aman**: Panel admin dilindungi dengan otentikasi login.
-* **Kelola Resep**: Menambah, mengubah, dan menghapus resep masakan.
-* **Kelola Komentar**: Menghapus komentar yang tidak pantas.
+    define('BASE_ASSET_PATH', rtrim($app_sub_directory . '/assets', '/'));
+}
 
----
+if (!defined('APP_ROOT_PATH_FOR_LINKS')) {
+    $app_root_path_for_links = str_replace('/assets', '', BASE_ASSET_PATH);
+    if ($app_root_path_for_links === '') {
+        $app_root_path_for_links = '.';
+    }
+    define('APP_ROOT_PATH_FOR_LINKS', $app_root_path_for_links);
+}
 
-### **Teknologi yang Digunakan**
-* **Backend**: PHP.
-* **Database**: MySQL.
-* **Frontend**: HTML, CSS, JavaScript.
+function generateSlug($conn, $text, $table, $column, $exclude_id = null) {
+    // 1. Bersihkan teks dan ubah ke huruf kecil
+    $text = preg_replace('/[^a-zA-Z0-9\s-]/', '', $text); // Hapus karakter non-alfanumerik kecuali spasi dan strip
+    $text = trim($text); // Hapus spasi di awal/akhir
+    $text = str_replace(' ', '-', $text); // Ganti spasi dengan strip
+    $text = preg_replace('/-+/', '-', $text); // Hapus strip ganda
+    $slug = strtolower($text); // Ubah ke huruf kecil
 
----
+    if (empty($slug)) {
+        $slug = 'resep'; // Default slug jika teks kosong
+    }
 
-### **Instalasi**
+    // 2. Periksa keunikan
+    $original_slug = $slug;
+    $counter = 1;
+    $is_unique = false;
 
-Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
-1.  **Web Server**: Pastikan kamu memiliki lingkungan server web (seperti XAMPP, WAMP, atau LAMP) dengan PHP dan MySQL terinstal.
-2.  **Kloning Repositori**: Unduh atau klon file proyek ini ke direktori `htdocs` (atau folder root server) kamu.
-3.  **Konfigurasi Database**:
-    * Buat database MySQL baru.
-    * Ganti detail koneksi database di file `includes/db.php` dengan kredensial database kamu.
-4.  **Impor Skema Database**: Skema database dapat dibuat secara manual berdasarkan file-file PHP yang disediakan, seperti `admin/show_admin_table.php` yang menunjukkan struktur tabel `admin`, dan `admin/list_recipe.php` yang menunjukkan tabel `recipes`.
+    while (!$is_unique) {
+        $query = "SELECT COUNT(*) FROM {$table} WHERE {$column} = ?";
+        $params = [$slug];
+        $types = 's';
 
----
-### **Kredensial Admin**
+        if ($exclude_id !== null) {
+            $query .= " AND id != ?";
+            $params[] = $exclude_id;
+            $types .= 'i';
+        }
 
-Untuk mengakses panel admin, gunakan kredensial berikut:
-* **Username**: `admin`
-* **Password**: `admin`
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            // Handle error in prepare, e.g., log it or return a fallback slug
+            error_log("Failed to prepare slug uniqueness check: " . $conn->error);
+            return uniqid('slug_'); // Return a unique fallback
+        }
 
-**Catatan**: Sesuai dengan kode, kredensial ini hanya untuk tujuan demo/debug dan tidak aman untuk lingkungan produksi.
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($count == 0) {
+            $is_unique = true;
+        } else {
+            $slug = $original_slug . '-' . $counter;
+            $counter++;
+        }
+    }
+
+    return $slug;
+}
+
+function getRecipeImageUrl($imageFilename) {
+    $baseAssetPath = BASE_ASSET_PATH;
+    $fullImagePath = __DIR__ . '/../assets/images/' . basename($imageFilename);
+
+    if (!empty($imageFilename) && file_exists($fullImagePath)) {
+        return $baseAssetPath . '/images/' . basename($imageFilename);
+    } else {
+        return $baseAssetPath . '/images/default-placeholder.png';
+    }
+}
+?>
