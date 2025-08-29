@@ -1,57 +1,45 @@
 # ChinguMasak: Jelajahi Kelezatan Resep Korea Autentik 🍲✨
 
 ## Selamat Datang di ChinguMasak!
-ChinguMasak adalah platform resep masakan Korea yang didedikasikan untuk para pecinta kuliner dan mereka yang ingin mencoba pengalaman memasak hidangan Korea autentik di rumah. Dari hidangan klasik seperti Kimchi Jjigae hingga kreasi modern yang menggoda selera, kami hadir untuk memandu Anda melalui setiap langkah. Siapkan diri Anda untuk petualangan rasa yang tak terlupakan!
-
-## ✨ Fitur Unggulan Kami ✨
-
-### 🧑‍🍳 Jelajahi Ribuan Resep Korea
-Temukan resep favorit Anda dengan mudah. Dari hidangan pembuka yang menyegarkan, hidangan utama yang mengenyangkan, hingga makanan penutup yang manis. Setiap resep dilengkapi dengan bahan-bahan lengkap, langkah-langkah detail, dan tips berguna.
-* **Kategori Resep Intuitif:** Filter resep berdasarkan kategori populer seperti "Sup & Stew", "Nasi & Mie", "Daging & Unggas", dan banyak lagi.
-* **Pencarian Cerdas:** Temukan resep yang Anda inginkan dalam sekejap dengan fitur pencarian yang akurat berdasarkan judul, bahan, atau bahkan metode masakan.
-
-### 🎥 Panduan Memasak Interaktif
-Beberapa resep kami dilengkapi dengan tautan video tutorial dari YouTube untuk membantu Anda memvisualisasikan setiap langkah, menjadikan proses memasak lebih mudah dan menyenangkan.
-
-### 💬 Bagikan Pengalaman Anda
-Setelah mencoba resep kami, jangan ragu untuk meninggalkan komentar dan membagikan pengalaman memasak Anda dengan komunitas ChinguMasak lainnya! Berikan *rating*, tips, atau bahkan modifikasi yang Anda lakukan.
-
-### 📱 Akses Kapan Saja, Di Mana Saja (PWA Ready!)
-ChinguMasak dirancang sebagai Progressive Web App (PWA). Ini berarti Anda bisa menyimpan aplikasi kami ke layar utama ponsel Anda dan menikmati akses offline untuk resep yang sudah Anda kunjungi. Masak tanpa khawatir koneksi internet!
-
-## ⚙️ Di Balik Layar: Panel Admin yang Efisien
-Untuk para administrator, kami menyediakan panel khusus untuk mengelola seluruh konten resep dan interaksi pengguna:
-* **Dashboard Insightful:** Pantau statistik resep dan komentar secara sekilas.
-* **Manajemen Resep Lengkap:** Tambah, edit, atau hapus resep dengan mudah. Upload gambar, atur kategori, dan tandai resep sebagai "Unggulan" untuk ditampilkan di beranda.
-* **Moderasi Komentar:** Tinjau dan kelola komentar yang masuk untuk menjaga kualitas komunitas.
+ChinguMasak adalah platform resep masakan Korea yang dibuat dengan sepenuh hati untuk membawa cita rasa otentik langsung ke dapurmu. Kami percaya, memasak hidangan Korea tidak pernah semudah ini. Dari hidangan klasik hingga jajanan kaki lima yang populer, semua resep disajikan dengan panduan yang jelas, mudah diikuti, dan tentu saja, penuh kebahagiaan!
 
 ---
 
-## 🛠️ Teknologi yang Menggerakkan ChinguMasak
-Proyek ini dibangun dengan fondasi teknologi yang solid:
+## ✨ Fitur Unggulan Kami ✨
+
+### **🌐 Pengalaman Pengguna yang Mulus**
+* **Akses Offline (PWA):-** Tambahkan ChinguMasak ke layar utama perangkatmu dan nikmati resep kapan saja, bahkan tanpa koneksi internet.
+* **Pencarian Cepat & Akurat:** Temukan resep idamanmu dalam hitungan detik dengan pencarian yang efisien berdasarkan judul, bahan, atau kategori.
+* **Tampilan Responsif:** Tampilan website kami otomatis menyesuaikan di setiap perangkat, dari desktop hingga ponsel.
+
+### **🍳 Konten Resep yang Kaya**
+* **Resep Otentik:** Semua resep disusun dengan detail, mencakup daftar bahan lengkap dan langkah-langkah memasak yang terperinci.
+* **Tutorial Video:** Setiap resep dilengkapi dengan tautan video tutorial dari YouTube untuk mempermudah proses memasakmu.
+* **Interaksi Komunitas:** Bagikan pengalaman dan tips masakanmu melalui fitur komentar di setiap resep.
+
+---
+
+## ⚙️ Di Balik Layar: Panel Admin
+Untuk mempermudah pengelolaan konten, kami menyediakan panel admin yang terpisah dan terstruktur:
+* **Dashboard:** Menyajikan ringkasan statistik resep dan komentar secara instan.
+* **Kelola Resep:** Tambah, edit, atau hapus resep dengan mudah. Unggah gambar, atur kategori, dan jadikan resep sebagai "unggulan".
+* **Moderasi Komentar:** Tinjau dan kelola komentar yang masuk untuk menjaga kebersihan komunitas.
+
+## 🛠️ Teknologi yang Menggerakkan Proyek Ini
 * **Backend:** PHP (Native)
 * **Database:** MySQLi
 * **Frontend:** HTML5, CSS3, JavaScript
 * **Arsitektur:** Aplikasi berbasis halaman (Page-based)
 
-## 🚀 Cara Memulai (Untuk Pengembang)
-1.  **Siapkan Database:**
-    * Buat database MySQL baru di *environment* lokal Anda.
-    * Perbarui informasi koneksi database di `includes/db.php` sesuai dengan konfigurasi Anda.
-    * *(Opsional: Import schema dan data contoh jika tersedia)*
-
-2.  **Siapkan Web Server:**
-    * Tempatkan seluruh folder proyek ChinguMasak ke dalam direktori web server Anda (misalnya: `htdocs` untuk XAMPP/AppServ, `www` untuk WAMP).
-    * Pastikan PHP dan MySQL server sudah berjalan.
-
-3.  **Jelajahi Aplikasi:**
-    * **Situs Publik:** Buka browser Anda dan kunjungi URL root proyek Anda (contoh: `http://localhost/chingumasak`).
-    * **Panel Admin:** Akses area admin melalui `http://localhost/chingumasak/admin`. *(Catatan: Kredensial login admin awal dapat dilihat pada skema database atau di file `admin/show_admin_table.php` jika ada.)*
+## 🚀 Cara Memulai
+1.  **Koneksi Database:** Konfigurasi informasi koneksi database di file `includes/db.php`.
+2.  **Hosting:** Tempatkan semua file ke direktori web server Anda (misal: `htdocs` di XAMPP).
+3.  **Akses:** Buka `http://localhost/chingumasak` untuk situs utama dan `http://localhost/chingumasak/admin` untuk panel admin.
 
 ## 💡 Catatan Penting
-* **Keamanan:** Fitur login admin saat ini menyimpan kata sandi dalam *plain-text* di database. Untuk implementasi produksi, sangat disarankan untuk menggunakan metode *hashing* kata sandi yang aman (misalnya `password_hash()` di PHP).
-* **Pengelolaan Gambar:** Gambar resep disimpan di `assets/images/`. Pastikan direktori ini memiliki izin tulis yang benar agar proses unggah berjalan lancar.
+* **Keamanan Login:** Saat ini, password admin disimpan dalam bentuk *plain-text*. Sangat disarankan untuk menggunakan metode *hashing* yang lebih aman untuk lingkungan produksi.
+* **Pengelolaan Gambar:** Gambar resep disimpan di `assets/images/`. Pastikan direktori ini memiliki izin tulis yang benar agar proses unggah gambar dapat berjalan lancar.
 
 ---
 
-Selamat memasak dan menikmati kelezatan masakan Korea bersama ChinguMasak!
+Selamat memasak dan nikmati kelezatan masakan Korea bersama ChinguMasak!
