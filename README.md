@@ -8,7 +8,6 @@ ChinguMasak adalah platform resep masakan Korea yang dibuat dengan sepenuh hati 
 ## ✨ Fitur Unggulan Kami ✨
 
 ### **🌐 Pengalaman Pengguna yang Mulus**
-* **Akses Offline (PWA):-** Tambahkan ChinguMasak ke layar utama perangkatmu dan nikmati resep kapan saja, bahkan tanpa koneksi internet.
 * **Pencarian Cepat & Akurat:** Temukan resep idamanmu dalam hitungan detik dengan pencarian yang efisien berdasarkan judul, bahan, atau kategori.
 * **Tampilan Responsif:** Tampilan website kami otomatis menyesuaikan di setiap perangkat, dari desktop hingga ponsel.
 
